@@ -1,9 +1,13 @@
 """Tabla `practica` (catálogo de prácticas con su precio)."""
 
 from decimal import Decimal
+from typing import TYPE_CHECKING
 
 from sqlalchemy import CheckConstraint, Numeric
-from sqlmodel import Field, SQLModel
+from sqlmodel import Field, Relationship, SQLModel
+
+if TYPE_CHECKING:
+    from app.modules.turnos.models import TurnoPractica
 
 
 class Practica(SQLModel, table=True):
@@ -14,3 +18,6 @@ class Practica(SQLModel, table=True):
     nombre: str = Field(unique=True)  # RN-02
     # Dinero siempre con Decimal, nunca float.
     precio: Decimal = Field(sa_type=Numeric(10, 2))
+
+    # Muchos a muchos con datos: se pasa por la clase intermedia, no directo a Turno.
+    turnos: list["TurnoPractica"] = Relationship(back_populates="practica")

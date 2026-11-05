@@ -42,7 +42,7 @@ Documentación interactiva: <http://localhost:8000/docs>
 
 - [x] **Ejercicio 1** — estructura, `lifespan`, motor y sesión asíncrona, `/health/live` y `/health/ready`.
 - [x] **Ejercicio 2** — DTOs separados, CRUD, PATCH parcial, códigos HTTP y paginación de mascotas.
-- [ ] **Ejercicio 3** — modelos con restricciones, relaciones navegables, `reiniciar.py` con datos iniciales.
+- [x] **Ejercicio 3** — modelos con restricciones, relaciones navegables, `reiniciar.py` con datos iniciales.
 - [ ] **Ejercicio 4** — altas de turnos con prácticas en una sola transacción.
 - [ ] **Ejercicio 5** — lecturas con carga anticipada (sin N+1).
 - [ ] **Ejercicio 6** — consulta al laboratorio fuera del event loop.
@@ -79,4 +79,6 @@ ejecutan con el servidor levantado, después de `python reiniciar.py`.
 
 ## Por qué `turno_practica.turno_id` no lleva índice propio
 
-_(se completa en el ejercicio 3)_
+La clave primaria `(turno_id, practica_id)` ya crea un índice cuya primera columna es
+`turno_id`, y ese índice sirve para buscar por `turno_id` solo. `practica_id` es la
+segunda columna: ese índice no sirve para buscar por ella, y por eso lleva uno propio.

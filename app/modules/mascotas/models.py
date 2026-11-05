@@ -6,6 +6,7 @@ from sqlmodel import Field, Relationship, SQLModel
 
 if TYPE_CHECKING:
     from app.modules.duenios.models import Duenio
+    from app.modules.turnos.models import Turno
 
 
 class Mascota(SQLModel, table=True):
@@ -19,3 +20,5 @@ class Mascota(SQLModel, table=True):
     duenio_id: int = Field(foreign_key="duenio.id", ondelete="RESTRICT", index=True)
 
     duenio: "Duenio" = Relationship(back_populates="mascotas")
+    # Asociación: una mascota puede tener muchos turnos.
+    turnos: list["Turno"] = Relationship(back_populates="mascota")
