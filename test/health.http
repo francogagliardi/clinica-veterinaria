@@ -1,7 +1,7 @@
 ### https://marketplace.visualstudio.com/items?itemName=humao.rest-client
 ### Correr después de levantar el servidor (uvicorn app.main:app --reload).
 
-@host = http://localhost:8010
+@host = http://localhost:8000
 
 ### C-00 · GET /health/live — esperado 200 {"estado": "vivo"}
 GET {{host}}/health/live

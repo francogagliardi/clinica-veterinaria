@@ -41,7 +41,7 @@ Documentación interactiva: <http://localhost:8000/docs>
 ## Estado del proyecto
 
 - [x] **Ejercicio 1** — estructura, `lifespan`, motor y sesión asíncrona, `/health/live` y `/health/ready`.
-- [ ] **Ejercicio 2** — DTOs separados, CRUD, PATCH parcial, códigos HTTP y paginación de mascotas.
+- [x] **Ejercicio 2** — DTOs separados, CRUD, PATCH parcial, códigos HTTP y paginación de mascotas.
 - [ ] **Ejercicio 3** — modelos con restricciones, relaciones navegables, `reiniciar.py` con datos iniciales.
 - [ ] **Ejercicio 4** — altas de turnos con prácticas en una sola transacción.
 - [ ] **Ejercicio 5** — lecturas con carga anticipada (sin N+1).

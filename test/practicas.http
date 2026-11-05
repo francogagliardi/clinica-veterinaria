@@ -1,0 +1,23 @@
+### Correr con el servidor levantado y despues de `python reiniciar.py`.
+@host = http://localhost:8000
+
+### Alta de practica - esperado 201
+POST {{host}}/practicas/
+Content-Type: application/json
+
+{ "nombre": "Consulta", "precio": "15000.00" }
+
+### C-02 - nombre repetido - esperado 409 con mensaje propio
+POST {{host}}/practicas/
+Content-Type: application/json
+
+{ "nombre": "Consulta", "precio": "100.00" }
+
+### Precio 0 - esperado 422 (RN-04, validado en el DTO)
+POST {{host}}/practicas/
+Content-Type: application/json
+
+{ "nombre": "Gratis", "precio": 0 }
+
+### Catalogo - esperado 200
+GET {{host}}/practicas/

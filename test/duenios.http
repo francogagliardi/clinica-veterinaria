@@ -1,0 +1,68 @@
+### Correr con el servidor levantado y despues de `python reiniciar.py`.
+@host = http://localhost:8000
+
+### Alta de duenio - esperado 201 (sin ficha: "ficha": null)
+POST {{host}}/duenios/
+Content-Type: application/json
+
+{ "nombre": "Ana Perez", "email": "ana@example.com" }
+
+### C-02 - email repetido - esperado 409 con mensaje propio
+POST {{host}}/duenios/
+Content-Type: application/json
+
+{ "nombre": "Otra Ana", "email": "ana@example.com" }
+
+### Alta sin email - esperado 422
+POST {{host}}/duenios/
+Content-Type: application/json
+
+{ "nombre": "Sin email" }
+
+### C-01 - id que no es entero - esperado 422 (el handler no se ejecuta)
+GET {{host}}/duenios/abc
+
+### Detalle de duenio - esperado 200 (con su ficha)
+GET {{host}}/duenios/1
+
+### Duenio inexistente - esperado 404
+GET {{host}}/duenios/9999
+
+### PATCH parcial - esperado 200; cambia solo el nombre, el email queda igual
+PATCH {{host}}/duenios/1
+Content-Type: application/json
+
+{ "nombre": "Ana Maria Perez" }
+
+### PATCH con campo en null - esperado 422
+PATCH {{host}}/duenios/1
+Content-Type: application/json
+
+{ "nombre": null }
+
+### Ficha del duenio - esperado 201
+POST {{host}}/duenios/1/ficha
+Content-Type: application/json
+
+{ "telefono": "11-5555-1234", "direccion": "Calle Falsa 123" }
+
+### C-03 - segunda ficha para el mismo duenio - esperado 409
+POST {{host}}/duenios/1/ficha
+Content-Type: application/json
+
+{ "telefono": "11-0000-0000", "direccion": "Otra calle 1" }
+
+### Ficha de duenio inexistente - esperado 404
+POST {{host}}/duenios/9999/ficha
+Content-Type: application/json
+
+{ "telefono": "1", "direccion": "x" }
+
+### Mascotas del duenio - esperado 200 (lista)
+GET {{host}}/duenios/1/mascotas
+
+### C-05 - borrar duenio que tiene mascotas - esperado 409 (ON DELETE RESTRICT)
+DELETE {{host}}/duenios/1
+
+### Borrar duenio inexistente - esperado 404
+DELETE {{host}}/duenios/9999

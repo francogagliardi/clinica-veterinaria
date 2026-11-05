@@ -1,0 +1,33 @@
+### Correr con el servidor levantado y despues de `python reiniciar.py`.
+### Necesita un duenio con id 1 (ver duenios.http).
+@host = http://localhost:8000
+
+### Alta de mascota - esperado 201
+POST {{host}}/mascotas/
+Content-Type: application/json
+
+{ "nombre": "Toby", "especie": "perro", "duenio_id": 1 }
+
+### C-04 - mascota con duenio inexistente - esperado 409
+POST {{host}}/mascotas/
+Content-Type: application/json
+
+{ "nombre": "Fantasma", "especie": "gato", "duenio_id": 9999 }
+
+### Mascota con su duenio - esperado 200
+GET {{host}}/mascotas/1
+
+### Mascota inexistente - esperado 404
+GET {{host}}/mascotas/9999
+
+### Listado paginado - esperado 200 { items, total, page, size, pages } (size 20 por defecto)
+GET {{host}}/mascotas/
+
+### Pagina 2 con size 1 - esperado 200 si hay al menos 2 mascotas
+GET {{host}}/mascotas/?page=2&size=1
+
+### Pagina mas alla de pages - esperado 422
+GET {{host}}/mascotas/?page=999
+
+### size fuera de rango (0 o 101) - esperado 422
+GET {{host}}/mascotas/?size=101
