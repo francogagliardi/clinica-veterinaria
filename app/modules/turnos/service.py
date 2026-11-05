@@ -87,6 +87,15 @@ async def obtener(session: AsyncSession, turno_id: int) -> TurnoRead:
     return _a_read(await obtener_con_detalle(session, turno_id))
 
 
+async def borrar(session: AsyncSession, turno_id: int) -> None:
+    """Borra el turno; sus prácticas las borra la base con ON DELETE CASCADE (RN-09)."""
+    turno = await session.get(Turno, turno_id)
+    if turno is None:
+        raise HTTPException(status.HTTP_404_NOT_FOUND, f"No existe el turno {turno_id}")
+    await session.delete(turno)
+    await session.commit()
+
+
 def _a_read(turno: Turno) -> TurnoRead:
     """Arma la respuesta: la práctica aporta su nombre; el precio es el del turno."""
     return TurnoRead(
