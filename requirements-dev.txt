@@ -1,0 +1,5 @@
+# Dependencias sólo para las pruebas automatizadas (no hacen falta para levantar la API).
+# Se instalan sobre el entorno que ya tiene requirements.txt:
+#   pip install -r requirements-dev.txt
+pytest>=8
+aiosqlite>=0.20

@@ -1,0 +1,85 @@
+### Correr con el servidor levantado y despues de `python reiniciar.py`.
+### Datos iniciales: mascota 1 = Toby; practicas 1 = Consulta (15000.00) y 3 = Vacuna antirrabica (12000.00).
+@host = http://localhost:8000
+
+### C-06 - turno valido con dos practicas - esperado 201
+### El precio y el total NO viajan en el cuerpo: los calcula el servidor (RN-06).
+### Respuesta esperada: total "27000.00" y cada practica con su precio_unitario copiado.
+POST {{host}}/turnos/
+Content-Type: application/json
+
+{
+  "mascota_id": 1,
+  "fecha": "2026-11-12T10:30:00-03:00",
+  "motivo": "Control anual",
+  "practicas": [
+    { "practica_id": 1 },
+    { "practica_id": 3 }
+  ]
+}
+
+### RN-05 - turno sin practicas - esperado 422 (el DTO exige al menos una)
+POST {{host}}/turnos/
+Content-Type: application/json
+
+{
+  "mascota_id": 1,
+  "fecha": "2026-11-12T10:30:00-03:00",
+  "motivo": "Sin practicas",
+  "practicas": []
+}
+
+### C-04 - turno con una practica inexistente - esperado 409
+### No queda guardado nada: ni el turno ni la practica valida que lo acompanaba.
+POST {{host}}/turnos/
+Content-Type: application/json
+
+{
+  "mascota_id": 1,
+  "fecha": "2026-11-12T10:30:00-03:00",
+  "motivo": "Practica inexistente",
+  "practicas": [
+    { "practica_id": 1 },
+    { "practica_id": 9999 }
+  ]
+}
+
+### RN-07 - la misma practica dos veces en un turno - esperado 409 (clave primaria compuesta)
+POST {{host}}/turnos/
+Content-Type: application/json
+
+{
+  "mascota_id": 1,
+  "fecha": "2026-11-12T10:30:00-03:00",
+  "motivo": "Practica repetida",
+  "practicas": [
+    { "practica_id": 1 },
+    { "practica_id": 1 }
+  ]
+}
+
+### Mascota inexistente - esperado 409 (clave foranea)
+POST {{host}}/turnos/
+Content-Type: application/json
+
+{
+  "mascota_id": 9999,
+  "fecha": "2026-11-12T10:30:00-03:00",
+  "motivo": "Mascota inexistente",
+  "practicas": [
+    { "practica_id": 1 }
+  ]
+}
+
+### Fecha sin zona horaria - esperado 422 (la columna es timestamptz)
+POST {{host}}/turnos/
+Content-Type: application/json
+
+{
+  "mascota_id": 1,
+  "fecha": "2026-11-12T10:30:00",
+  "motivo": "Fecha sin zona",
+  "practicas": [
+    { "practica_id": 1 }
+  ]
+}

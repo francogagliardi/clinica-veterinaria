@@ -43,7 +43,7 @@ Documentación interactiva: <http://localhost:8000/docs>
 - [x] **Ejercicio 1** — estructura, `lifespan`, motor y sesión asíncrona, `/health/live` y `/health/ready`.
 - [x] **Ejercicio 2** — DTOs separados, CRUD, PATCH parcial, códigos HTTP y paginación de mascotas.
 - [x] **Ejercicio 3** — modelos con restricciones, relaciones navegables, `reiniciar.py` con datos iniciales.
-- [ ] **Ejercicio 4** — altas de turnos con prácticas en una sola transacción.
+- [x] **Ejercicio 4** — altas de turnos con prácticas en una sola transacción.
 - [ ] **Ejercicio 5** — lecturas con carga anticipada (sin N+1).
 - [ ] **Ejercicio 6** — consulta al laboratorio fuera del event loop.
 
@@ -70,12 +70,21 @@ app/
 compose.yaml              PostgreSQL 16 para desarrollo
 reiniciar.py              borra, crea el esquema y carga datos iniciales
 test/                     casos de prueba en archivos .http
+tests/                    pruebas automatizadas (pytest + SQLite en memoria)
 ```
 
-## Pruebas manuales
+## Pruebas
 
 Los archivos de `test/` son para la extensión *REST Client* de VS Code y se
 ejecutan con el servidor levantado, después de `python reiniciar.py`.
+
+Las pruebas automatizadas de `tests/` no necesitan PostgreSQL ni Docker: usan
+SQLite en memoria con las mismas tablas, restricciones y claves foráneas.
+
+```powershell
+pip install -r requirements-dev.txt
+python -m pytest tests -q
+```
 
 ## Por qué `turno_practica.turno_id` no lleva índice propio
 
