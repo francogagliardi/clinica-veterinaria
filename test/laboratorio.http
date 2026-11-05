@@ -1,0 +1,24 @@
+### https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+### Correr después de levantar el servidor (uvicorn app.main:app --reload).
+
+@host = http://localhost:8000
+
+### GET /laboratorio/stock/{vacuna} — esperado 200 {"vacuna": "rabia", "stock": 15}, en 1 segundo
+GET {{host}}/laboratorio/stock/rabia
+
+### C-09 · Tres consultas simultáneas al laboratorio y un GET /health/live
+### Enviar las tres consultas 1, 2 y 3 y, antes de que pase un segundo, la de salud.
+### Esperado: cada consulta 200 y /health/live 200 {"estado": "vivo"} de inmediato,
+### sin esperar a que terminen las consultas al laboratorio.
+
+### C-09 · Consulta 1 — esperado 200 {"vacuna": "rabia", "stock": 15}
+GET {{host}}/laboratorio/stock/rabia
+
+### C-09 · Consulta 2 — esperado 200 {"vacuna": "moquillo", "stock": 18}
+GET {{host}}/laboratorio/stock/moquillo
+
+### C-09 · Consulta 3 — esperado 200 {"vacuna": "parvovirus", "stock": 20}
+GET {{host}}/laboratorio/stock/parvovirus
+
+### C-09 · Salud — esperado 200 {"estado": "vivo"} de inmediato
+GET {{host}}/health/live
