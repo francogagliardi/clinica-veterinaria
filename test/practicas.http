@@ -5,7 +5,7 @@
 POST {{host}}/practicas/
 Content-Type: application/json
 
-{ "nombre": "Consulta", "precio": "15000.00" }
+{ "nombre": "Radiografía", "precio": "20000.00" }
 
 ### C-02 - nombre repetido - esperado 409 con mensaje propio
 POST {{host}}/practicas/
