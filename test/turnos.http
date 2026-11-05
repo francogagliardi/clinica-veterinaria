@@ -84,14 +84,16 @@ Content-Type: application/json
   ]
 }
 
-### C-07 - paso 1: turno con UNA practica - esperado 201 (anota el id que devuelve)
+### C-07 - paso 1: turno con UNA practica - esperado 201
+# @name turnoUnaPractica
 POST {{host}}/turnos/
 Content-Type: application/json
 
 { "mascota_id": 1, "fecha": "2026-11-13T10:00:00-03:00", "motivo": "Una practica",
   "practicas": [ { "practica_id": 1 } ] }
 
-### C-07 - paso 2: turno con TRES practicas - esperado 201 (anota el id)
+### C-07 - paso 2: turno con TRES practicas - esperado 201
+# @name turnoTresPracticas
 POST {{host}}/turnos/
 Content-Type: application/json
 
@@ -99,12 +101,12 @@ Content-Type: application/json
   "practicas": [ { "practica_id": 1 }, { "practica_id": 2 }, { "practica_id": 3 } ] }
 
 ### C-07 - detalle del turno de 1 practica - esperado 200 y 2 SELECT en la consola
-### (cambia el 2 por el id del paso 1)
-GET {{host}}/turnos/2
+### (antes hay que enviar el paso 1: el id sale de su respuesta)
+GET {{host}}/turnos/{{turnoUnaPractica.response.body.$.id}}
 
 ### C-07 - detalle del turno de 3 practicas - esperado 200 y los MISMOS 2 SELECT
-### (cambia el 3 por el id del paso 2)
-GET {{host}}/turnos/3
+### (antes hay que enviar el paso 2: el id sale de su respuesta)
+GET {{host}}/turnos/{{turnoTresPracticas.response.body.$.id}}
 
 ### Turno inexistente - esperado 404
 GET {{host}}/turnos/9999
