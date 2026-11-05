@@ -44,7 +44,7 @@ Documentación interactiva: <http://localhost:8000/docs>
 - [x] **Ejercicio 2** — DTOs separados, CRUD, PATCH parcial, códigos HTTP y paginación de mascotas.
 - [x] **Ejercicio 3** — modelos con restricciones, relaciones navegables, `reiniciar.py` con datos iniciales.
 - [x] **Ejercicio 4** — altas de turnos con prácticas en una sola transacción.
-- [ ] **Ejercicio 5** — lecturas con carga anticipada (sin N+1).
+- [x] **Ejercicio 5** — lecturas con carga anticipada (sin N+1).
 - [ ] **Ejercicio 6** — consulta al laboratorio fuera del event loop.
 
 ## Variables de entorno

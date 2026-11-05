@@ -13,3 +13,9 @@ router = APIRouter(prefix="/turnos", tags=["turnos"])
 @router.post("/", response_model=TurnoRead, status_code=status.HTTP_201_CREATED)
 async def crear_turno(datos: TurnoCreate, session: AsyncSession = Depends(get_session)):
     return await service.crear(session, datos)
+
+
+@router.get("/{turno_id}", response_model=TurnoRead)
+async def obtener_turno(turno_id: int, session: AsyncSession = Depends(get_session)):
+    return await service.obtener(session, turno_id)
+

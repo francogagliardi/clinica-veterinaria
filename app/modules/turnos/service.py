@@ -62,11 +62,11 @@ async def crear(session: AsyncSession, datos: TurnoCreate) -> TurnoRead:
             "No se pudo crear el turno: la mascota no existe o la práctica está repetida",
         )
 
-    return _a_read(await _detalle(session, turno.id))
+    return _a_read(await obtener_con_detalle(session, turno.id))
 
 
-async def _detalle(session: AsyncSession, turno_id: int) -> Turno:
-    """Trae turno, mascota y prácticas con carga anticipada (nada de perezosa)."""
+async def obtener_con_detalle(session: AsyncSession, turno_id: int) -> Turno:
+    """Turno + mascota (joinedload) + prácticas con su nombre (selectinload): 2 consultas fijas."""
     consulta = (
         select(Turno)
         .where(Turno.id == turno_id)
@@ -80,6 +80,11 @@ async def _detalle(session: AsyncSession, turno_id: int) -> Turno:
     if turno is None:
         raise HTTPException(status.HTTP_404_NOT_FOUND, f"No existe el turno {turno_id}")
     return turno
+
+
+async def obtener(session: AsyncSession, turno_id: int) -> TurnoRead:
+    """Detalle de un turno para GET /turnos/{id}."""
+    return _a_read(await obtener_con_detalle(session, turno_id))
 
 
 def _a_read(turno: Turno) -> TurnoRead:
