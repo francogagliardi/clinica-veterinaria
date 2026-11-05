@@ -19,3 +19,8 @@ async def crear_turno(datos: TurnoCreate, session: AsyncSession = Depends(get_se
 async def obtener_turno(turno_id: int, session: AsyncSession = Depends(get_session)):
     return await service.obtener(session, turno_id)
 
+
+@router.delete("/{turno_id}", status_code=status.HTTP_204_NO_CONTENT)
+async def borrar_turno(turno_id: int, session: AsyncSession = Depends(get_session)) -> None:
+    await service.borrar(session, turno_id)
+

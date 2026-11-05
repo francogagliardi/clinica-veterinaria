@@ -109,3 +109,13 @@ GET {{host}}/turnos/3
 ### Turno inexistente - esperado 404
 GET {{host}}/turnos/9999
 
+### C-05 - borrar el turno 1 (tiene dos practicas) - esperado 204 y sin cuerpo
+### Sus practicas las borra la base: SELECT count(*) FROM turno_practica WHERE turno_id = 1; da 0.
+DELETE {{host}}/turnos/1
+
+### C-05 - el turno borrado ya no esta - esperado 404
+GET {{host}}/turnos/1
+
+### Borrar un turno inexistente - esperado 404
+DELETE {{host}}/turnos/9999
+
