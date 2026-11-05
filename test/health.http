@@ -1,0 +1,11 @@
+### https://marketplace.visualstudio.com/items?itemName=humao.rest-client
+### Correr después de levantar el servidor (uvicorn app.main:app --reload).
+
+@host = http://localhost:8010
+
+### C-00 · GET /health/live — esperado 200 {"estado": "vivo"}
+GET {{host}}/health/live
+
+### C-00 · GET /health/ready — esperado 200 {"estado": "listo", "base": "ok"}
+###               y 503 {"estado": "no_listo", "base": "sin_conexion"} si la base no responde
+GET {{host}}/health/ready

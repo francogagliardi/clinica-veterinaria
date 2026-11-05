@@ -1,0 +1,32 @@
+# PostgreSQL para desarrollo, sin instalar nada en la máquina.
+#
+#   docker compose up -d      -> levanta la base
+#   docker compose ps         -> muestra el estado (healthy = lista)
+#   docker compose logs -f db -> ver el log
+#   docker compose down       -> apaga (conserva los datos en el volumen)
+#   docker compose down -v    -> apaga y borra los datos
+#
+# El puerto del host es 5433 para no chocar con un PostgreSQL local en 5432.
+# Las credenciales se leen del .env: una sola fuente de verdad para la app y la base.
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: veterinaria-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  pgdata:
