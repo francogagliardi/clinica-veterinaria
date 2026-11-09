@@ -4,6 +4,15 @@ API asincrónica para una veterinaria de barrio: dueños, mascotas, prácticas y
 Trabajo práctico de Programación III (unidades 1 a 4) con FastAPI, SQLModel y
 PostgreSQL.
 
+## Integrantes
+
+- Cattáneo, Ciro
+- Ceballos, Ignace
+- Copia, Santiago
+- Gagliardi, Franco
+- Miranda, Emmanuel
+- Quiroga, Ramiro
+
 ## Requisitos
 
 - Python 3.12 o superior (probado con 3.14).
